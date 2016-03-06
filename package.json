@@ -1,0 +1,37 @@
+{
+  "name": "backbone.commando",
+  "description": "Command framework for Backbone.JS",
+  "homepage": "https://github.com/omriyariv/commando",
+  "version": "0.0.1",
+  "keywords": [
+    "backbone",
+    "command",
+    "undo",
+    "redo"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Omri Yariv",
+    "email": "omriyariv@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/omriyariv/commando/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omriyariv/commando.git"
+  },
+  "github": "https://github.com/omriyariv/commando",
+  "dependencies": {
+    "backbone": "1.0.0 - 1.2.3",
+    "underscore": "1.4.4 - 1.8.3"
+  },
+  "devDependencies": {
+    "eslint": "^2.3.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.0"
+  },
+  "scripts": {
+    "lint": "eslint src/**"
+  }
+}
