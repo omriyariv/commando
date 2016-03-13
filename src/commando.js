@@ -6,12 +6,11 @@ import SetCmd from './commands/set';
 import AddCmd from './commands/add';
 import RemoveCmd from './commands/remove';
 import Command from './commands/command';
-import CompositeCommand from './commands/composite';
 
 const Commando = Backbone.Commando = function Commando(options) {
   this.options = options || {};
   this.factory = new Factory();
-  this.executer = new Executer(this.factory, this.options.levels);
+  this.executer = new Executer(this.options.levels);
   this._registerCommands();
   this._initProxyEvents();
 };
@@ -23,7 +22,8 @@ _.extend(Commando.prototype, Events, {
   },
 
   do(...args) {
-    return this.executer.do(...args);
+    const cmd = this.factory.make(...args);
+    return this.executer.do(cmd);
   },
 
   undo(...args) {
@@ -59,6 +59,5 @@ _.extend(Commando.prototype, Events, {
 });
 
 Commando.Command = Command;
-Commando.CompositeCommand = CompositeCommand;
 
 export default Commando;

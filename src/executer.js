@@ -2,8 +2,7 @@ import _ from 'underscore';
 import { Events } from 'backbone';
 import BoundedStack from './bounded-stack';
 
-const Executer = function Executer(factory, levels) {
-  this.factory = factory;
+const Executer = function Executer(levels) {
   this.undoStack = new BoundedStack(levels);
   this.redoStack = new BoundedStack(levels);
   this.addListeners();
@@ -18,13 +17,12 @@ _.extend(Executer.prototype, Events, {
     this.redoStack.on('nonempty', () => this.trigger('redo:enabled'));
   },
 
-  do(name, ...args) {
-    const command = this.factory.make(name, args);
-    command.mode = 'do';
+  do(command) {
+    command.setMode('do');
     const ret = command.execute(...command._args);
     if (command.register !== false) {
       this.undoStack.push(command);
-      this.redoStack.reset();
+      this.redoStack.empty();
     }
     this.trigger('do');
     return ret;
@@ -34,7 +32,7 @@ _.extend(Executer.prototype, Events, {
     let ret;
     if (this.canUndo()) {
       const command = this.undoStack.pop();
-      command.mode = 'undo';
+      command.setMode('undo');
       ret = command.unexecute(...command._args);
       this.redoStack.push(command);
       this.trigger('undo');
@@ -46,7 +44,7 @@ _.extend(Executer.prototype, Events, {
     let ret;
     if (this.canRedo()) {
       const command = this.redoStack.pop();
-      command.mode = 'redo';
+      command.setMode('redo');
       ret = command.execute(...command._args);
       this.undoStack.push(command);
       this.trigger('redo');

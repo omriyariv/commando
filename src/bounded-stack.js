@@ -34,7 +34,7 @@ _.extend(BoundedStack.prototype, Events, {
     return element;
   },
 
-  reset() {
+  empty() {
     const wasEmpty = this.isEmpty();
     this.stack = [];
     if (!wasEmpty) {
