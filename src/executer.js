@@ -24,7 +24,7 @@ _.extend(Executer.prototype, Events, {
       this.undoStack.push(command);
       this.redoStack.empty();
     }
-    this.trigger('do');
+    this.trigger('do', command);
     return ret;
   },
 
@@ -35,7 +35,7 @@ _.extend(Executer.prototype, Events, {
       command.setMode('undo');
       ret = command.unexecute(...command._args);
       this.redoStack.push(command);
-      this.trigger('undo');
+      this.trigger('undo', command);
     }
     return ret;
   },
@@ -47,7 +47,7 @@ _.extend(Executer.prototype, Events, {
       command.setMode('redo');
       ret = command.execute(...command._args);
       this.undoStack.push(command);
-      this.trigger('redo');
+      this.trigger('redo', command);
     }
     return ret;
   },
